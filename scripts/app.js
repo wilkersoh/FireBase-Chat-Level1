@@ -32,7 +32,7 @@ newNameForm.addEventListener('submit', e => {
 
 // update the chat room
 rooms.addEventListener('click', e => {
-    console.log(e);
+    
     if(e.target.tagName.toLowerCase() === 'button'){
         chatUI.clear();
         // 清理后 去找被点击的id
@@ -51,6 +51,6 @@ const chatroom = new Chatroom('general', username);
 
 // get chats and render it
 chatroom.getChats((data) => {
-
+    // getChats 是個cb 
     chatUI.render(data);
 }); 
