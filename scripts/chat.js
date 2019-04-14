@@ -8,6 +8,7 @@ class Chatroom {
         this.room = room;
         this.username = username;
         this.chats = db.collection('chats');
+        this.unsub;
     }
     async addChat(message){
         // format a chat object
@@ -25,7 +26,7 @@ class Chatroom {
     getChats(cb){
         // db 里面的 room == 这个room
         // 然后 它就只会显示 chatroom('x')的罢了 被过滤了
-        this.chats
+        this.unsub = this.chats
           .where('room', '==', this.room) 
           .orderBy('create_at')
         // snapshot method is firebase
@@ -40,17 +41,14 @@ class Chatroom {
     }
     updateName(username){
         this.username = username;
+        localStorage.setItem('username', username);
     }
     updateRoom(room){
         this.room = room;
         console.log('room updated')
+        if(this.unsub){
+            // 这个是 让它换 room了 就不再收到之前那个room的信息
+            this.unsub();
+        }
     }
 }
-
-
-const chatroom = new Chatroom('general', 'shuan');
-chatroom.getChats((data) => {
-    console.log(data);
-});
-
-chatroom.updateRoom('gaming');
