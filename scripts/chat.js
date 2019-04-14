@@ -34,6 +34,7 @@ class Chatroom {
             snapshot.docChanges().forEach(change => {
                 if(change.type === 'added'){
                     // update to UI
+                    // 拿到data了 save在 cb裏面 等 被調取
                     cb(change.doc.data());
                 }
             })
